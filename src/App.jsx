@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./App.css";
-import ReactDOM from "react-dom";
+import Modal from "./components/modal/Modal";
 
 export default function App() {
   const [users, setUsers] = useState();
@@ -64,7 +64,7 @@ export default function App() {
   }
   return (
     <>
-      {openModal ? ReactDOM.createPortal(<div>1</div>, document.body) : null}
+       {openModal && <Modal openModal={openModal}/> }
 
       <div className="App">
         <div>
