@@ -9,104 +9,59 @@ body {
 .App {
   font-family: sans-serif;
   display: flex;
+
 }
 
 ul {
   display: flex;
   list-style-type: none;
 }
-.listItem {
+.ListItem {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.info {
-  /* flex-grow: f; */
+.Info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 10px;
 }
-.img {
+.Img {
   border: 2px solid rgb(0, 238, 255);
-  border-radius: 10px;
+  border-radius: 100px;
 }
-.deleteBtn {
+.DeleteBtn {
   width: 150px;
   background-color: rgb(0, 238, 255);
   border-radius: 5px;
   border: none;
 }
-
-.reloadBtn {
-  align-self: flex-end;
-  border: 2px solid #fff;
+.ChangeInfoBtn {
+  width: 150px;
+  background-color: rgb(208, 88, 212);
   border-radius: 5px;
-  color: black;
+  border: none;
+}
+.FilterUsers {
   background-color: rgba(238, 174, 202, 1);
-  /* width: 100%; */
+  border: 2px solid rgb(0, 238, 255);
+  border-radius: 10px;
+}
+
+.ReloadBtn {
+  border: 2px solid rgb(0, 238, 255);
+  border-radius: 5px;
+  color: #111;
+  background-color: rgba(238, 174, 202, 1);
+  margin-left:7rem;
+  width: 60%;
 }
 
 /* spiner */
-/* .lds-heart {
-  display: block;
-  margin: 15rem auto;
-  position: relative;
-  width: 80px;
-  height: 80px;
-  transform: rotate(45deg);
-  transform-origin: 40px 40px;
-}
-.lds-heart div {
-  top: 32px;
-  left: 32px;
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  background: #fff;
-  animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-.lds-heart div:after,
-.lds-heart div:before {
-  content: " ";
-  position: absolute;
-  display: block;
-  width: 32px;
-  height: 32px;
-  background: #fff;
-}
-.lds-heart div:before {
-  left: -24px;
-  border-radius: 50% 0 0 50%;
-}
-.lds-heart div:after {
-  top: -24px;
-  border-radius: 50% 50% 0 0;
-}
-@keyframes lds-heart {
-  0% {
-    transform: scale(0.95);
-  }
-  5% {
-    transform: scale(1.1);
-  }
-  39% {
-    transform: scale(0.85);
-  }
-  45% {
-    transform: scale(1);
-  }
-  60% {
-    transform: scale(0.95);
-  }
-  100% {
-    transform: scale(0.9);
-  }
-} */
-
 .lds-hourglass {
   display: block;
-  margin: 25rem auto;
+  margin: 50vw auto;
   position: relative;
   width: 80px;
   height: 80px;
