@@ -17,8 +17,6 @@ const ModalEdit = ({ user, onSave, openModal, setOpenModal }) => {
         }
     }
 
-
-
     const TryToSave = () => {
         if (userEdit.name.first.length !== 0) {
             onSave(userEdit)
@@ -29,6 +27,7 @@ const ModalEdit = ({ user, onSave, openModal, setOpenModal }) => {
     useEffect(() => {
         user && setUserEdit(user)
     }, [user])
+
     if (!userEdit) return null
     return < Modal openModal={openModal} >
         <label >change name: </label>

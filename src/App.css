@@ -9,7 +9,6 @@ body {
 .App {
   font-family: sans-serif;
   display: flex;
-
 }
 
 ul {
@@ -51,11 +50,11 @@ ul {
 
 .ReloadBtn {
   border: 2px solid rgb(0, 238, 255);
-  border-radius: 5px;
+  border-radius: 10px;
   color: #111;
   background-color: rgba(238, 174, 202, 1);
-  margin-left:7rem;
-  width: 60%;
+  width: 50%;
+  margin-top: 10px;
 }
 
 /* spiner */

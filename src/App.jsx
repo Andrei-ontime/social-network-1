@@ -1,35 +1,14 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import ModalEdit from './components/ModalEdit';
+import { useFetch } from './components/hooks/useFetch';
 
 export default function App() {
-  const [users, setUsers] = useState();
   const [filteredUserValue, setFilteredUserValue] = useState('');
   const [userEdit, setUserEdit] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [fetchError, setFetchError] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-
-
-
-  const fetchUsers = () => {
-    setLoading(true);
-    axios
-      .get('https://randomuser.me/api/?results=10')
-      .then(function (response) {
-        setUsers(response.data.results);
-      })
-      .catch(function (error) {
-        setFetchError(true);
-        console.log(error);
-      })
-      .finally(function () {
-        setLoading(false);
-      });
-  };
-
+  const { users, setUsers, loading, fetchError, toggleReload } = useFetch('https://randomuser.me/api/?results=20')
 
 
 
@@ -46,40 +25,23 @@ export default function App() {
     }))
   }
 
-  const toggleReload = () => {
-    setLoading(true);
-    setTimeout(() => {
-      fetchUsers();
-    }, 3000);
-  };
 
-  useEffect(() => {
+  if (fetchError) {
+    return (
+      <div>
+        <p>{fetchError}</p>
+        <button className='ReloadBtn' onClick={toggleReload}>
+          Reload
+        </button>
+      </div>
+    );
+  }
 
-  }, [filteredUserValue])
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchUsers();
-    }, 4000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
 
   if (loading === true) {
     return (
       <div className='lds-hourglass'>
         <div></div>
-      </div>
-    );
-  }
-  if (fetchError === true) {
-    return (
-      <div>
-        <p>ошибка сервера</p>
-        <button className='ReloadBtn' onClick={toggleReload}>
-          Reload
-        </button>
       </div>
     );
   }
@@ -98,7 +60,7 @@ export default function App() {
               setFilteredUserValue(event.target.value);
             }}
           />
-          {users.length && users.filter((user) => {
+          {(users != null) && users.filter((user) => {
             if (!filteredUserValue) {
               return true
             }
