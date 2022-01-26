@@ -46,6 +46,7 @@ ul {
   background-color: rgba(238, 174, 202, 1);
   border: 2px solid rgb(0, 238, 255);
   border-radius: 10px;
+  outline: none;
 }
 
 .ReloadBtn {

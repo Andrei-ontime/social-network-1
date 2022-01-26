@@ -2,11 +2,18 @@ import { useState } from 'react';
 import './App.css';
 import ModalEdit from './components/ModalEdit';
 import { useFetch } from './components/hooks/useFetch';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUsers } from './components/store/asyncActions/fetchUsersAction';
+
 
 export default function App() {
   const [filteredUserValue, setFilteredUserValue] = useState('');
   const [userEdit, setUserEdit] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+
+  const dispatch = useDispatch();
+  const fetchedUsers = useSelector(state => state.users)
+
 
   const { users, setUsers, loading, fetchError, toggleReload } = useFetch('https://randomuser.me/api/?results=20')
 
@@ -52,6 +59,9 @@ export default function App() {
       </ModalEdit>
 
       <div className='App'>
+        <div><button onClick={() => { dispatch(fetchUsers) }} >FETCH USERS</button>
+          <button onClick={() => { console.log(fetchedUsers) }}>SHOW  USERS</button>
+        </div>
         <div>
           <input
             placeholder='Filter users'
@@ -102,6 +112,7 @@ export default function App() {
           </button>
         </div>
       </div>
+
     </>
   );
 }
