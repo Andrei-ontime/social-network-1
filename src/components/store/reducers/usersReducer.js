@@ -17,16 +17,13 @@ export const initialState = {
 export const usersReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USERS:
-      return { ...state, users: [...action.payload] };
+      return { ...state, error:null, loading:false, users: [...action.payload] };
 
     case SET_ERROR:
-      return { ...state, error: action.payload };
+      return { ...state,loading: false, error: action.payload };
 
     case SET_LOADING:
-      return { ...state, loading: action.payload };
-
-    case SET_SUCCESS:
-      return { ...state, success: action.payload };
+      return { ...state, loading: true };
 
     case DELETE_USER:
       return {

@@ -1,6 +1,5 @@
 import { SET_LOADING } from "../constants";
 
-export const fetchUsersLoading = (payload) => ({
+export const fetchUsersLoading = () => ({
   type: SET_LOADING,
-  payload,
 });
