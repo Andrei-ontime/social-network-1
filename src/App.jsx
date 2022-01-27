@@ -1,36 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import ModalEdit from './components/ModalEdit';
-import { useFetch } from './components/hooks/useFetch';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsers } from './components/store/asyncActions/fetchUsersAction';
+import { fetchUsersAction } from './components/store/asyncActions/fetchUsersAction';
+import { deleteUser } from './components/store/actionCreators/deleteUser';
+import { editUser } from './components/store/actionCreators/editUser';
 
 
 export default function App() {
+  const dispatch = useDispatch();
+  const fetchedUsers = useSelector(state => state.users)
+  const fetchError = useSelector(state => state.error)
+  const fetchLoading = useSelector(state => state.loading)
+
   const [filteredUserValue, setFilteredUserValue] = useState('');
   const [userEdit, setUserEdit] = useState(null);
   const [openModal, setOpenModal] = useState(false);
 
-  const dispatch = useDispatch();
-  const fetchedUsers = useSelector(state => state.users)
-
-
-  const { users, setUsers, loading, fetchError, toggleReload } = useFetch('https://randomuser.me/api/?results=20')
-
-
+  const toggleReload = () => {
+    dispatch(fetchUsersAction)
+  }
 
   const toggleDeleteUser = (id) => {
-    setUsers([...users].filter((user) => user.login.uuid !== id));
+    dispatch(deleteUser(id))
+
   };
 
-  const EditUserName = (changedUser) => {
-    setUsers(users.map((user) => {
-      if (user.login.uuid === changedUser.login.uuid) {
-        return changedUser
-      }
-      return user
-    }))
+  const editUserName = (userEdit) => {
+    console.log(userEdit)
+    dispatch(editUser(userEdit))
   }
+
+  useEffect(() => {
+    toggleReload()
+  }, [])
 
 
   if (fetchError) {
@@ -45,7 +48,7 @@ export default function App() {
   }
 
 
-  if (loading === true) {
+  if (fetchLoading === true) {
     return (
       <div className='lds-hourglass'>
         <div></div>
@@ -55,13 +58,10 @@ export default function App() {
 
   return (
     <>
-      <ModalEdit openModal={openModal} onSave={EditUserName} onClose={() => setUserEdit(null)} user={userEdit} setOpenModal={setOpenModal}>
+      <ModalEdit openModal={openModal} onSave={editUserName} onClose={() => setUserEdit(null)} user={userEdit} setOpenModal={setOpenModal}>
       </ModalEdit>
 
       <div className='App'>
-        <div><button onClick={() => { dispatch(fetchUsers) }} >FETCH USERS</button>
-          <button onClick={() => { console.log(fetchedUsers) }}>SHOW  USERS</button>
-        </div>
         <div>
           <input
             placeholder='Filter users'
@@ -70,7 +70,7 @@ export default function App() {
               setFilteredUserValue(event.target.value);
             }}
           />
-          {(users != null) && users.filter((user) => {
+          {(fetchedUsers != null) && fetchedUsers.filter((user) => {
             if (!filteredUserValue) {
               return true
             }
@@ -112,7 +112,6 @@ export default function App() {
           </button>
         </div>
       </div>
-
     </>
   );
 }
