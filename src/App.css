@@ -61,7 +61,7 @@ ul {
 /* spiner */
 .lds-hourglass {
   display: block;
-  margin: 50vw auto;
+  margin: 50vh auto;
   position: relative;
   width: 80px;
   height: 80px;

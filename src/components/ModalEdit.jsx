@@ -1,9 +1,9 @@
 import Modal from "./modal/Modal";
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
-import { editUser } from "./store/actionCreators/editUser";
+import { editUser } from "./store/slices/fetchUsersAction";
 
-const ModalEdit = ({ user, onSave, openModal, setOpenModal }) => {
+const ModalEdit = ({ user, openModal, setOpenModal }) => {
     const [userEdit, setUserEdit] = useState(null);
     const [validationError, setValidationError] = useState('');
     const [disableButton, setDisableButton] = useState(false)

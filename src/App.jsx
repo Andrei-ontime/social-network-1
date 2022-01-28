@@ -2,23 +2,22 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import ModalEdit from './components/ModalEdit';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsersAction } from './components/store/asyncActions/fetchUsersAction';
-import { deleteUser } from './components/store/actionCreators/deleteUser';
-import { editUser } from './components/store/actionCreators/editUser';
+import { fetchUsers, deleteUser, editUser } from './components/store/slices/fetchUsersAction';
 
 
 export default function App() {
   const dispatch = useDispatch();
-  const fetchedUsers = useSelector(state => state.users)
-  const fetchError = useSelector(state => state.error)
-  const fetchLoading = useSelector(state => state.loading)
+  const fetchedUsers = useSelector(state => state.users.users)
+  const fetchError = useSelector(state => state.users.error)
+  const fetchLoading = useSelector(state => state.users.loading)
 
   const [filteredUserValue, setFilteredUserValue] = useState('');
   const [userEdit, setUserEdit] = useState(null);
   const [openModal, setOpenModal] = useState(false);
 
   const toggleReload = () => {
-    dispatch(fetchUsersAction)
+    dispatch(fetchUsers())
+    setFilteredUserValue('')
   }
 
   const toggleDeleteUser = (id) => {
@@ -26,15 +25,9 @@ export default function App() {
 
   };
 
-  const editUserName = (userEdit) => {
-    console.log(userEdit)
-    dispatch(editUser(userEdit))
-  }
-
   useEffect(() => {
-    toggleReload()
-  }, [])
-
+    dispatch(fetchUsers())
+  }, [dispatch])
 
   if (fetchError) {
     return (
@@ -58,7 +51,7 @@ export default function App() {
 
   return (
     <>
-      <ModalEdit openModal={openModal} onSave={editUserName} onClose={() => setUserEdit(null)} user={userEdit} setOpenModal={setOpenModal}>
+      <ModalEdit openModal={openModal} onClose={() => setUserEdit(null)} user={userEdit} setOpenModal={setOpenModal}>
       </ModalEdit>
 
       <div className='App'>
@@ -70,7 +63,7 @@ export default function App() {
               setFilteredUserValue(event.target.value);
             }}
           />
-          {(fetchedUsers != null) && fetchedUsers.filter((user) => {
+          {(fetchedUsers.length !== 0) && fetchedUsers.filter((user) => {
             if (!filteredUserValue) {
               return true
             }
